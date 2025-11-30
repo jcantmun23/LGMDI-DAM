@@ -1,0 +1,104 @@
+//ejercicio 9
+import java.util.Scanner
+
+
+public class CalculadoraSimple
+
+
+public static void main(String[] args)
+{
+
+int num1
+int mum2
+string operacion
+system.out.println("Introduce los  numeros:")
+num1=leer.nextInt()
+num2=leer.nextInt()
+system.out.println("Introduce la operacion a realizar (+,-,*,/):")
+operacion=leer.next()
+switch(operacion){
+case "+":
+system.out.println("La suma es: "+(num1+num2))
+break
+case "-":
+system.out.println("La resta es: "+(num1-num2))
+break
+case "*":
+system.out.println("La multiplicacion es: "+(num1*num2))
+break
+case "/":
+if(num2!=0){
+system.out.println("La division es: "+(num1/num2))
+}else{
+system.out.println("Error: No se puede dividir entre 0")
+}
+break
+default:
+system.out.println("Operacion no valida")
+break
+}
+//ejercicio 10
+int lunes=1
+int martes=2
+int miercoles=3
+int jueves=4
+int viernes=5
+int sabado=6
+int domingo=7
+system.out.println("Introduce un numero del 1 al 7:")
+int dia=leer.nextInt()
+switch(dia){
+case 1:
+system.out.println("Lunes")
+break
+case 2:
+system.out.println("Martes")
+break
+case 3:
+system.out.println("Miercoles")
+break
+case 4:
+system.out.println("Jueves")
+break
+case 5:
+system.out.println("Viernes")
+break
+case 6:
+system.out.println("Sabado")
+break
+case 7:
+system.out.println("Domingo")
+break
+default:
+system.out.println("Numero no valido")
+break
+}
+//ejercicio 11
+int café=1.20
+int té=1.00
+int refresco=1.50
+int agua=0.80
+system.out.println("Menu:")
+system.out.println("1. Café - 1.20€")
+system.out.println("2. Té - 1.00€")
+system.out.println("3. Refresco - 1.50€")
+system.out.println("4. Agua - 0.80€")
+system.out.println("Introduce el numero del producto que deseas:")
+int producto=leer.nextInt()
+double total=0
+switch(producto){
+case 1:
+system.out.println("el precio del café es: "+café)
+break
+case 2:
+system.out.println("el precio del té es: "+té)
+break
+case 3:
+system.out.println("el precio del refresco es: "+refresco)
+break
+case 4:
+system.out.println("el precio del agua es: "+agua)
+break
+default:
+system.out.println("Producto no valido")
+break
