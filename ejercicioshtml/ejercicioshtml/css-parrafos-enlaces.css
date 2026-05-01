@@ -1,0 +1,32 @@
+/* 1 - Color de fondo al body usando valores RGB */
+body {
+    background-color: rgb(200, 220, 240);
+}
+
+/* 2 - Color de texto a todos los párrafos usando nombre de color */
+p {
+    color: darkblue;
+}
+
+/* 3 - Color de texto al párrafo con clase segundo usando valor hexadecimal */
+p.segundo {
+    color: #FF6347;
+}
+
+/* 4 - Color de texto al párrafo con clase tercero usando valores HSL */
+p.tercero {
+    color: hsl(120, 100%, 50%);
+}
+
+/* 5 - Color de fondo al enlace con transparencia usando valores RGBA */
+a {
+    background-color: rgba(255, 165, 0, 0.7);
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+/* 6 - Color de fondo al párrafo con clase tercero con transparencia usando HSLA */
+p.tercero {
+    background-color: hsla(60, 100%, 50%, 0.5);
+    padding: 10px;
+}

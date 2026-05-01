@@ -1,0 +1,44 @@
+/* Estilos generales de la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+/* Encabezado de la tabla */
+table thead {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Estilos para cada fila con color de fondo */
+.td1 {
+    background-color: #696969;
+    color: white;
+}
+
+.td2 {
+    background-color: #CD5C5C;
+    color: white;
+}
+
+.td3 {
+    background-color: #B22222;
+    color: white;
+}
+
+.td4 {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.td5 {
+    background-color: #4B0082;
+    color: white;
+}
