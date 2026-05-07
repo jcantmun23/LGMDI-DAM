@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+caption {
+    background-color: #FFCC99;
+    padding: 12px;
+    font-weight: bold;
+    border: 1px solid #000;
+    border-bottom: none;
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+    height: 30px;
+}
+
+/* Encabezado */
+thead tr {
+    background-color: #FFCC99;
+}
+
+thead th {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Pie de tabla */
+tfoot {
+    background-color: #FFCC99;
+}
+
+tfoot th {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Colores de celdas */
+.row-azul {
+    background-color: #87CEEB;
+}
+
+.row-verde {
+    background-color: #90EE90;
+}
+
+.row-blanco {
+    background-color: white;
+}

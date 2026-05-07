@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestra Historia</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#f8f6f4;
+--text:#333;
+--card:#ffffff;
+}
+body.dark{
+--bg:#111;
+--text:#eee;
+--card:#1c1c1c;
+}
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:'Inter',sans-serif;
+transition:0.6s;
+overflow-x:hidden;
+}
+
+/* LOCK */
+#lock{
+position:fixed;
+width:100%;
+height:100vh;
+background:black;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:20;
+}
+#lock input{
+padding:10px;
+border-radius:30px;
+border:none;
+text-align:center;
+margin-top:15px;
+}
+
+/* INTRO */
+#intro{
+position:fixed;
+width:100%;
+height:100vh;
+background:black;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:10;
+opacity:0;
+pointer-events:none;
+transition:2s;
+}
+
+/* LAYOUT */
+.container{
+max-width:900px;
+margin:auto;
+padding:30px 20px;
+}
+
+h2{
+font-family:'Playfair Display',serif;
+font-weight:500;
+margin-top:40px;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+margin-top:20px;
+}
+
+/* ALBUM */
+.album{
+display:flex;
+overflow-x:auto;
+gap:20px;
+scroll-snap-type:x mandatory;
+padding-bottom:15px;
+}
+.photoCard{
+min-width:260px;
+border-radius:20px;
+scroll-snap-align:center;
+transition:0.5s;
+}
+.photoCard img{
+width:100%;
+border-radius:15px;
+}
+.photoCard input, textarea{
+width:100%;
+margin-top:8px;
+border:none;
+border-bottom:1px solid #ccc;
+background:transparent;
+color:var(--text);
+}
+
+/* LETTER */
+.letter{
+white-space:pre-line;
+min-height:150px;
+line-height:1.6;
+}
+
+/* BUTTON */
+button{
+background:black;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:30px;
+cursor:pointer;
+margin-top:10px;
+}
+
+/* PETALS */
+.petal{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear forwards;
+}
+@keyframes fall{
+to{transform:translateY(110vh);}
+}
+
+.gameCard{
+width:70px;
+height:90px;
+background:var(--card);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+border-radius:15px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+.gameCard:hover{
+transform:scale(1.05);
+}
+.winAnimation{
+animation:pop 0.6s ease;
+}
+@keyframes pop{
+0%{transform:scale(1);}
+50%{transform:scale(1.3);}
+100%{transform:scale(1);}
+}
+
+.memoryCard{
+width:70px;
+height:70px;
+background:var(--card);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+
+<body>
+
+<div id="lock">
+<h2>Introduce nuestra fecha especial</h2>
+<input type="password" id="password">
+<button onclick="unlock()">Entrar</button>
+</div>
+
+<div id="intro">
+<h1 style="font-family:'Playfair Display';font-size:40px;">Nuestra Historia</h1>
+<p>Un lugar solo nuestro</p>
+</div>
+
+<div class="container" id="main" style="display:none;">
+
+<audio autoplay loop controls>
+<source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3">
+</audio>
+
+<h2>💕 Llevamos juntos</h2>
+<div class="card">
+<p id="daysTogether"></p>
+</div>
+
+<h2>📖 Nuestro Álbum</h2>
+<input type="file" id="photoInput" accept="image/*">
+<div class="album" id="album"></div>
+
+<h2>🎂 Carta de Cumpleaños</h2>
+<button onclick="startLetter()">Abrir Carta</button>
+<div class="card letter" id="letter"></div>
+
+<button onclick="toggleDark()">Modo Noche</button>
+<h2>🎮 Encuentra el Corazón</h2>
+<div class="card">
+<p>Encuentra el corazón escondido entre las cartas.</p>
+<div id="heartGame" style="display:flex;gap:15px;justify-content:center;"></div>
+<p id="gameResult"></p>
+</div>
+
+<h2>💌 Mensaje Secreto</h2>
+<div class="card">
+<button onclick="unlockSecret()">Descubrir Mensaje</button>
+<p id="secretMessage" style="margin-top:15px;"></p>
+</div>
+</div>
+<h2>🧠 Juego de Memoria</h2>
+<div class="card">
+<p>Puntos: <span id="totalPoints">0</span></p>
+<div id="memoryGame" style="display:grid;grid-template-columns:repeat(4,70px);gap:10px;justify-content:center;"></div>
+</div>
+
+<h2>🎲 Ruleta Romántica</h2>
+<div class="card" style="text-align:center;">
+<button onclick="spinWheel()">Girar Ruleta</button>
+<p id="wheelResult" style="margin-top:15px;font-weight:bold;"></p>
+</div>
+
+<h2>🎬 Mini Historia</h2>
+<div class="card">
+<div id="storyText"></div>
+<button onclick="nextStory()">Continuar</button>
+</div>
+
+<div id="hiddenSurprise" class="card" style="display:none;text-align:center;">
+<h2>💍 Sorpresa Especial</h2>
+<p>Has ganado 3 veces… así que aquí va:</p>
+<p style="font-size:22px;font-weight:bold;">
+Prometo seguir construyendo recuerdos contigo toda la vida.
+</p>
+</div>
+<script>
+
+/* CONFIG */
+const PASSWORD="181025";   // CAMBIA AQUÍ
+const START_DATE=new Date("2025-10-18"); // CAMBIA AQUÍ
+
+/* UNLOCK */
+function unlock(){
+let pass=document.getElementById("password").value;
+if(pass===PASSWORD){
+document.getElementById("lock").style.display="none";
+document.getElementById("intro").style.opacity="1";
+setTimeout(()=>{
+document.getElementById("intro").style.opacity="0";
+document.getElementById("main").style.display="block";
+},3000);
+}else{
+alert("Esa no es nuestra fecha ❤️");
+}
+}
+
+/* DAYS TOGETHER */
+function updateDays(){
+let now=new Date();
+let diff=Math.floor((now-START_DATE)/(1000*60*60*24));
+document.getElementById("daysTogether").innerText=
+diff+" días caminando juntos.";
+}
+updateDays();
+
+
+<h2>💌 Mensaje Secreto</h2>
+<div class="card">
+<button onclick="unlockSecret()">Descubrir Mensaje</button>
+<p id="secretMessage" style="margin-top:15px;"></p>
+</div>
+/* DARK MODE AUTO */
+let hour=new Date().getHours();
+if(hour>=20||hour<=6){
+document.body.classList.add("dark");
+}
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+
+/* ALBUM SAVE */
+let album=JSON.parse(localStorage.getItem("albumData"))||[];
+function renderAlbum(){
+let container=document.getElementById("album");
+container.innerHTML="";
+album.forEach((item,index)=>{
+let card=document.createElement("div");
+card.className="photoCard card";
+
+let img=document.createElement("img");
+img.src=item.image;
+
+let date=document.createElement("input");
+date.value=item.date;
+date.onchange=function(){
+album[index].date=this.value;
+save();
+};
+
+let desc=document.createElement("textarea");
+desc.value=item.desc;
+desc.placeholder="Escribe un recuerdo...";
+desc.onchange=function(){
+album[index].desc=this.value;
+save();
+};
+
+card.appendChild(img);
+card.appendChild(date);
+card.appendChild(desc);
+container.appendChild(card);
+});
+}
+function save(){
+localStorage.setItem("albumData",JSON.stringify(album));
+}
+document.getElementById("photoInput").addEventListener("change",function(e){
+let reader=new FileReader();
+reader.onload=function(){
+album.push({
+image:reader.result,
+date:new Date().toLocaleDateString(),
+desc:""
+});
+save();
+renderAlbum();
+}
+reader.readAsDataURL(e.target.files[0]);
+});
+renderAlbum();
+
+/* LETTER TYPEWRITER */
+const message=`Hoy celebramos tu vida.
+
+Celebramos tu luz.
+Tu ternura.
+Tu manera única de existir.
+
+Gracias por cada sonrisa,
+cada abrazo,
+cada momento compartido.
+
+Que este nuevo año esté lleno de sueños cumplidos
+y que yo pueda estar contigo en todos ellos.
+
+Feliz cumpleaños, mi amor. ❤️`;
+
+function startLetter(){
+let i=0;
+let letter=document.getElementById("letter");
+letter.innerHTML="";
+let interval=setInterval(()=>{
+letter.innerHTML+=message[i];
+i++;
+if(i>=message.length) clearInterval(interval);
+},35);
+}
+
+/* PETALS */
+setInterval(()=>{
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(Math.random()*5+5)+"s";
+document.body.appendChild(petal);
+setTimeout(()=>petal.remove(),10000);
+},800);
+
+
+/* =========================
+🎮 JUEGO ENCUENTRA CORAZÓN
+========================= */
+
+function startHeartGame(){
+let container=document.getElementById("heartGame");
+container.innerHTML="";
+let heartPosition=Math.floor(Math.random()*3);
+
+for(let i=0;i<3;i++){
+let card=document.createElement("div");
+card.className="gameCard";
+card.innerHTML="💌";
+
+card.onclick=function(){
+if(i===heartPosition){
+card.innerHTML="❤️";
+card.classList.add("winAnimation");
+document.getElementById("gameResult").innerText=
+"¡Lo encontraste! Tu premio: un beso infinito 💋";
+}else{
+card.innerHTML="🤍";
+document.getElementById("gameResult").innerText=
+"Ups… prueba otra vez 😏";
+}
+};
+container.appendChild(card);
+}
+}
+startHeartGame();
+
+/* =========================
+💌 MENSAJE SECRETO
+========================= */
+
+const secretTexts=[
+"Si estás leyendo esto… te amo más de lo que imaginas.",
+"Eres mi mejor decisión.",
+"Quiero todos mis futuros contigo.",
+"Gracias por existir en mi vida."
+];
+
+function unlockSecret(){
+let random=secretTexts[Math.floor(Math.random()*secretTexts.length)];
+let textElement=document.getElementById("secretMessage");
+textElement.innerText="";
+let i=0;
+let interval=setInterval(()=>{
+textElement.innerText+=random[i];
+i++;
+if(i>=random.length) clearInterval(interval);
+},40);
+}
+
+/* =========================
+🏆 SISTEMA DE PUNTOS
+========================= */
+
+let totalPoints = 0;
+let wins = 0;
+
+function addPoints(p){
+totalPoints += p;
+document.getElementById("totalPoints").innerText = totalPoints;
+
+if(wins >= 3){
+document.getElementById("hiddenSurprise").style.display="block";
+}
+}
+
+/* =========================
+🧠 JUEGO MEMORIA
+========================= */
+
+function startMemoryGame(){
+let images = ["❤️","🌸","💋","💖"];
+let cards = [...images, ...images];
+cards.sort(()=>0.5-Math.random());
+
+let container=document.getElementById("memoryGame");
+container.innerHTML="";
+
+let first=null;
+let second=null;
+let lock=false;
+
+cards.forEach(symbol=>{
+let card=document.createElement("div");
+card.className="memoryCard";
+card.innerHTML="❓";
+
+card.onclick=function(){
+if(lock || card.innerHTML!== "❓") return;
+
+card.innerHTML=symbol;
+
+if(!first){
+first=card;
+}else{
+second=card;
+lock=true;
+
+setTimeout(()=>{
+if(first.innerHTML===second.innerHTML){
+addPoints(10);
+wins++;
+}else{
+first.innerHTML="❓";
+second.innerHTML="❓";
+}
+first=null;
+second=null;
+lock=false;
+},800);
+}
+};
+container.appendChild(card);
+});
+}
+startMemoryGame();
+
+/* =========================
+🎲 RULETA ROMÁNTICA
+========================= */
+
+const wheelOptions=[
+"Un beso ahora mismo 💋",
+"Un abrazo largo 🤍",
+"Elijo la próxima cita 📅",
+"Masaje gratis 😏",
+"Te debo una sorpresa 🎁"
+];
+
+function spinWheel(){
+let result = wheelOptions[Math.floor(Math.random()*wheelOptions.length)];
+document.getElementById("wheelResult").innerText=result;
+addPoints(5);
+}
+
+/* =========================
+🎬 MINI HISTORIA INTERACTIVA
+========================= */
+
+const storyLines=[
+"Todo empezó con un encuentro inesperado...",
+"Después llegó una sonrisa que cambió mi día.",
+"Sin darme cuenta, ya eras mi persona favorita.",
+"Y ahora solo quiero escribir el resto de la historia contigo."
+];
+
+let storyIndex=0;
+
+function nextStory(){
+let container=document.getElementById("storyText");
+if(storyIndex>=storyLines.length){
+container.innerHTML="Fin… o más bien, comienzo ❤️";
+return;
+}
+
+let text=storyLines[storyIndex];
+container.innerHTML="";
+let i=0;
+
+let interval=setInterval(()=>{
+container.innerHTML+=text[i];
+i++;
+if(i>=text.length) clearInterval(interval);
+},40);
+
+storyIndex++;
+}
+</script>
+
+</body>
+</html>

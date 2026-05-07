@@ -1,0 +1,36 @@
+/* Contenedor con fondo amarillo */
+.contenedor {
+    background-color: yellow;
+    padding: 30px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* Título */
+h2 {
+    color: yellow;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+    margin-top: 0;
+}
+
+/* Listas sin viñetas */
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+/* Enlaces con color naranja */
+a {
+    color: orange;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Márgenes en listas anidadas */
+ul ul {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

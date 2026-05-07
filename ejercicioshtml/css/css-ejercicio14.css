@@ -1,0 +1,47 @@
+body {
+    background-color: cyan;
+    padding: 20px;
+}
+
+.contenedor {
+    background-color: cyan;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Texto centrado */
+.centrado {
+    text-align: center;
+    color: cyan;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+/* Texto centrado con fondo plata */
+.centrado-fondo {
+    text-align: center;
+    background-color: #c0c0c0;
+    color: cyan;
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+/* Texto alineado a la derecha */
+.derecha {
+    text-align: right;
+    color: cyan;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+/* Texto alineado a la derecha con fondo plata */
+.derecha-fondo {
+    text-align: center;
+    background-color: #ff69b4;
+    color: cyan;
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 16px;
+}
